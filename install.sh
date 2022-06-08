@@ -17,7 +17,7 @@ sudo systemctl enable mongod
 sudo apt-get install -y openssl
 
 #Installing Redis Server
-sudo apt-get install redis-server
+sudo apt-get install -y redis-server
 pw=$(openssl rand 60 | openssl base64 -A)
 sudo echo 'supervised systemd' >> /etc/redis/redis.conf
 sudo echo 'bind 127.0.0.1 ::1' >> /etc/redis/redis.conf
