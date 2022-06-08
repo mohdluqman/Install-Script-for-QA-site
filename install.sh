@@ -18,13 +18,16 @@ sudo apt-get install -y openssl
 
 #Installing Redis Server
 sudo apt-get install -y redis-server
-pw=$(openssl rand 60 | openssl base64 -A)
+export pw=$(openssl rand 60 | openssl base64 -A)
 sudo echo 'supervised systemd' >> /etc/redis/redis.conf
 sudo echo 'bind 127.0.0.1 ::1' >> /etc/redis/redis.conf
-sudo echo 'requirepass $pw' >> /etc/redis/redis.conf
+sudo echo 'requirepass '"$pw" >> /etc/redis/redis.conf
 sudo systemctl restart redis.service
 
 #Logging basic IP details DO Specific
 export HOSTNAME=$(curl -s http://169.254.169.254/metadata/v1/hostname)
 export PUBLIC_IPV4=$(curl -s http://169.254.169.254/metadata/v1/interfaces/public/0/ipv4/address)
-echo Droplet: $HOSTNAME, IP Address: $PUBLIC_IPV4 > /etc/server_index.html
+export USER_DATA=$(curl http://169.254.169.254/metadata/v1/user-data)
+echo Droplet: $HOSTNAME, IP Address: $PUBLIC_IPV4, Redis_password: $pw > /etc/server_index.html
+echo USER_DATA: >> /etc/server_index.html
+echo $USER_DATA >> /etc/server_index.html
