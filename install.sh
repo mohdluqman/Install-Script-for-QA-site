@@ -1,13 +1,13 @@
 #!/bin/bash
 
 #Always update your dist repo first
-sudo apt update
+sudo apt-get update
 
 #Installing MongoDB 4.4
 curl -fsSL https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
 echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
-sudo apt update
-sudo apt -y install mongodb-org
+sudo apt-get update
+sudo apt-get -y install mongodb-org
 sudo systemctl start mongod.service
 sudo systemctl enable mongod
 #export test=$(mongo --eval 'db.runCommand({ connectionStatus: 1 })')
@@ -17,7 +17,7 @@ sudo systemctl enable mongod
 sudo apt-get install -y openssl
 
 #Installing Redis Server
-sudo apt install redis-server
+sudo apt-get install redis-server
 pw=$(openssl rand 60 | openssl base64 -A)
 sudo echo 'supervised systemd' >> /etc/redis/redis.conf
 sudo echo 'bind 127.0.0.1 ::1' >> /etc/redis/redis.conf
